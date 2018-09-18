@@ -1,6 +1,6 @@
 $(function(){
 
-  $('body').append('<table id="birthdayTable"><thead><th>Name</th><th>Birthday</th><th>SFPC Birthday</th></thead><tbody id="birthdayContainer"></tbody></table>');
+  $('body').append('<table id="birthdayTable"><thead><th>Name</th><th>SFPC Birthday Dinner</th><th>SFPC Birthday</th><th><a href="https://en.wikipedia.org/wiki/Gregorian_calendar">Gregorian Birthday</td></th></thead><tbody id="birthdayContainer"></tbody></table>');
   var bdayContainer = $('#birthdayContainer');
 
   var birthdays = [
@@ -24,7 +24,7 @@ $(function(){
     {name:"Meg", date:new Date('12/29/2018')}
   ];
 
-  var startDate = new Date('9/10/2018');
+  var startDate = new Date('9/17/2018');
   var endDate = new Date('11/16/2018');
 
   $('#sfpcDefaultDates').append('(assumes an SFPC-year of ' + startDate.toDateString() + ' to ' + endDate.toDateString() + ')');
@@ -38,7 +38,12 @@ $(function(){
     var sfpcDate = new Date(startDate.getTime() + (sfpcDay * 24 * 60 * 60 * 1000) );
 
     item.sfpcBirthday = sfpcDate;
-    bdayContainer.append('<tr><td>' + item.name + '</td><td>' + item.date.toDateString() + '</td><td>' + item.sfpcBirthday.toDateString() + '</td></tr>');
+
+    var dateModifier = 3 - sfpcDate.getDay(); // 3 is wednesday in js date
+    item.sfpcDinnerDate = new Date(sfpcDate.getTime());
+    item.sfpcDinnerDate.setDate(item.sfpcDinnerDate.getDate() + dateModifier);
+
+    bdayContainer.append('<tr><td>' + item.name + '</td><td>' + item.sfpcDinnerDate.toDateString() + '</td><td>' + item.sfpcBirthday.toDateString() + '</td><td>' + item.date.toDateString() + '</td></tr>');
 
   });
 
