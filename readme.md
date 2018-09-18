@@ -2,5 +2,6 @@
 * Inspired by a Taeyoon Choi side conversation
 * Data gathered by Elizabeth Lin
 
-* Todo: create a timeline (D3 included, but no work done)
-* Todo: CSS updates to make this look better
+## Todo
+  * Todo: create a timeline (D3 included, but no work done)
+  * Todo: CSS updates to make this look better
