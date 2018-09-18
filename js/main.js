@@ -16,11 +16,12 @@ $(function(){
     {name:"Tim", date:new Date('6/28/2018')},
     {name:"Neta", date:new Date('7/8/2018')},
     {name:"Susie", date:new Date('7/31/2018')},
+    {name:"Lauren", date:new Date('8/1/2018')},
+    {name:"Taeyoon", date:new Date('8/2/2018')},
     {name:"Galen", date:new Date('8/30/2018')},
     {name:"Ed", date:new Date('9/14/2018')},
     {name:"Lynne", date:new Date('10/2/2018')},
-    {name:"Meg", date:new Date('12/29/2018')},
-    {name:"Taeyoon", date:new Date('8/2/2018')}
+    {name:"Meg", date:new Date('12/29/2018')}
   ];
 
   var startDate = new Date('9/10/2018');
