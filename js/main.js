@@ -47,10 +47,71 @@ $(function(){
 
   });
 
-  /*var chart = d3.timeline();
+  //var chart = d3.timeline();
 
-  var svg = d3.select("#timeline").append("svg").attr("width", 500)
-    .datum(birthdays).call(chart);*/
+  var chartWidth = 1000;
+  var chartHeight = 200;
+  var svg = d3.select("#timeline").append("svg").attr("width", chartWidth).attr("height", chartHeight);
+  var g = svg.append("g");
+
+    var x = d3.scaleTime().rangeRound([50, chartWidth - 50]);
+    x.domain(d3.extent(birthdays, function(d) { return d.sfpcBirthday; }));
+
+    g.append("g")
+      .attr("transform", "translate(0,50)")
+      .call(d3.axisTop(x))
+    .select(".domain")
+      .remove();
+
+    var x2 = d3.scaleTime().rangeRound([50, chartWidth - 50]);
+    x2.domain(d3.extent(birthdays, function(d) { return d.date; }));
+
+    g.append("g")
+      .attr("transform", "translate(0," + (chartHeight - 50) + ")")
+      .call(d3.axisBottom(x2))
+    .select(".domain")
+      .remove();
+
+    // draw circles
+
+      console.log(birthdays);
+    var gC = svg.append("g").datum(birthdays);
+		var circles = gC.selectAll("circle")
+			.data(function(d) { return d; })
+			.enter()
+			.append("circle")
+			.attr("r", 20)
+			.style("fill-opacity",1e-6);
+
+
+		circles.transition()
+		     .duration(function(d,i){
+		    	 return 100 * i;
+		     })
+		     /*.ease("linear")*/
+		    .attr("cx", function(d) {
+				return x(new Date(d.sfpcBirthday));
+			})
+			.attr("cy", function(d) {
+				return chartHeight / 2;
+			})
+      .attr("fill", "darkOrange")
+			.style("fill-opacity",1);
+
+    var labels = gC.selectAll("text")
+      .data(function(d) { return d; })
+      .enter()
+      .append("text")
+      .attr("x", function(d) {
+        return x(new Date(d.sfpcBirthday)) + 15;
+      })
+      .attr("y", function(d) {
+				return (chartHeight / 2) - 15;
+			})
+      .text(function(d) {
+        return d.name;
+      });
+
 
 });
 

@@ -441,7 +441,12 @@ table {
 #birthdayTable th, #birthdayTable td {
   text-align:right;
 }
-
+#timeline {
+  
+}
+#timeline svg {
+  color:#000;
+}
 
 
 
