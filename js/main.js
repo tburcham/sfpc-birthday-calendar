@@ -115,17 +115,20 @@ $(function(){
 
 
       var radius = 250;
+
+
       // Circular timeline
       circles.transition()
   		     .duration(function(d,i){
   		    	 return 100 * i;
   		     })
   		    .attr("cx", function(d) {
-  				      return Math.cos(x(new Date(d.sfpcBirthday))) * radius + (chartWidth / 2);
+            var ang = x(new Date(d.sfpcBirthday)) * (Math.PI/180);
+  		      return Math.cos(ang) * radius + (chartWidth / 2);
   			   })
           .attr("cy", function(d) {
-          	//return chartHeight / 2;
-                return Math.sin(x(new Date(d.sfpcBirthday))) * radius + (chartHeight / 2);
+            var ang = x(new Date(d.sfpcBirthday)) * (Math.PI/180);
+            return Math.sin(ang) * radius + (chartHeight / 2);
           })
           .attr("fill", "darkOrange")
           .style("fill-opacity",1);
@@ -135,10 +138,12 @@ $(function(){
         .enter()
         .append("text")
         .attr("x", function(d) {
-          return Math.cos(x(new Date(d.sfpcBirthday))) * radius + (chartWidth / 2) + 25;
+          var ang = x(new Date(d.sfpcBirthday)) * (Math.PI/180);
+          return Math.cos(ang) * radius + (chartWidth / 2) + 25;
         })
         .attr("y", function(d) {
-  				return Math.sin(x(new Date(d.sfpcBirthday))) * radius + (chartHeight / 2);
+          var ang = x(new Date(d.sfpcBirthday)) * (Math.PI/180);
+  				return Math.sin(ang) * radius + (chartHeight / 2);
   			})
         .text(function(d) {
           return d.name;
