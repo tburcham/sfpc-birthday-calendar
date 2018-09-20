@@ -50,14 +50,15 @@ $(function(){
   //var chart = d3.timeline();
 
   var chartWidth = 1000;
-  var chartHeight = 200;
+  var chartHeight = 1000;
   var svg = d3.select("#timeline").append("svg").attr("width", chartWidth).attr("height", chartHeight);
   var g = svg.append("g");
 
-    var x = d3.scaleTime().rangeRound([50, chartWidth - 50]);
+    //var x = d3.scaleTime().rangeRound([50, chartWidth - 50]);
+    var x = d3.scaleTime().rangeRound([0, 360]);
     x.domain(d3.extent(birthdays, function(d) { return d.sfpcBirthday; }));
 
-    g.append("g")
+    /*g.append("g")
       .attr("transform", "translate(0,50)")
       .call(d3.axisTop(x))
     .select(".domain")
@@ -70,7 +71,7 @@ $(function(){
       .attr("transform", "translate(0," + (chartHeight - 50) + ")")
       .call(d3.axisBottom(x2))
     .select(".domain")
-      .remove();
+      .remove();*/
 
     // draw circles
 
@@ -84,11 +85,11 @@ $(function(){
 			.style("fill-opacity",1e-6);
 
 
-		circles.transition()
+      // Linear timeline
+		/*circles.transition()
 		     .duration(function(d,i){
 		    	 return 100 * i;
 		     })
-		     /*.ease("linear")*/
 		    .attr("cx", function(d) {
 				return x(new Date(d.sfpcBirthday));
 			})
@@ -110,7 +111,42 @@ $(function(){
 			})
       .text(function(d) {
         return d.name;
-      });
+      });*/
+
+
+      var radius = 250;
+      // Circular timeline
+      circles.transition()
+  		     .duration(function(d,i){
+  		    	 return 100 * i;
+  		     })
+  		    .attr("cx", function(d) {
+  				      return Math.cos(x(new Date(d.sfpcBirthday))) * radius + (chartWidth / 2);
+  			   })
+          .attr("cy", function(d) {
+          	//return chartHeight / 2;
+                return Math.sin(x(new Date(d.sfpcBirthday))) * radius + (chartHeight / 2);
+          })
+          .attr("fill", "darkOrange")
+          .style("fill-opacity",1);
+
+      var labels = gC.selectAll("text")
+        .data(function(d) { return d; })
+        .enter()
+        .append("text")
+        .attr("x", function(d) {
+          return Math.cos(x(new Date(d.sfpcBirthday))) * radius + (chartWidth / 2) + 25;
+        })
+        .attr("y", function(d) {
+  				return Math.sin(x(new Date(d.sfpcBirthday))) * radius + (chartHeight / 2);
+  			})
+        .text(function(d) {
+          return d.name;
+        });
+
+      /*.attr('transform', function (d, i) {
+        return "translate(" + ((w/2-r) * Math.cos((interval*i) * Math.PI/180)) + "," + ((w/2-r) * Math.sin((interval*i) * Math.PI/180)) + ")";
+    });*/
 
 
 });
